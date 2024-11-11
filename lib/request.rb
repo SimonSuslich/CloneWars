@@ -18,9 +18,12 @@ class Request
   end
 
   def create_headers(source_strings)
-    @headers = source_strings.select do |element|
-      element.include?(':')
-    end.map { |element| element.split(':', 2).map(&:strip) }.to_h
+    headers_info = []
+    source_strings.each do |element|
+      headers_info << (element) if element.include?(':')
+    end
+
+    @headers = headers_info.map { |element| element.split(':', 2).map(&:strip) }.to_h
   end
 
   def create_params(source_string)
@@ -28,15 +31,18 @@ class Request
 
     if source_string[-2..] != "\n\n"
       @params = source_string.split("\n")[-1].split('&').map do |element|
-        element.include?('=') ? element.split('=', 2).map(&:strip) : nil
+        assert_params(element)
       end.compact.to_h
     end
-
 
     return unless @resource.include?('?')
 
     @params = @resource.split('?', 2)[-1].split('&').map do |element|
-      element.include?('=') ? element.split('=', 2).map(&:strip) : nil
+      assert_params(element)
     end.compact.to_h
+  end
+
+  def assert_params(element)
+    element.include?('=') ? element.split('=', 2).map(&:strip) : nil
   end
 end
