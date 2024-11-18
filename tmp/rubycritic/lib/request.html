@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">47</span><small> lines of codes</small></div>
-              <div><span class="metric">4</span><small> methods</small></div>
+              <div><span class="metric">48</span><small> lines of codes</small></div>
+              <div><span class="metric">5</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">15.3</span><small> complexity/method</small></div>
-              <div><span class="metric">5</span><small> churn</small></div>
+              <div><span class="metric">10.8</span><small> complexity/method</small></div>
+              <div><span class="metric">6</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">61.24</span><small> complexity</small></div>
+              <div><span class="metric">54.14</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -107,7 +107,6 @@ class Request<ol class="nocode errors smells">  <li>    <div class="description"
     request_lines = request_string.split(&quot;\n&quot;)
     first_line, *rest_lines = request_lines
     create_methods(first_line)
-    # p rest_lines
     create_headers(rest_lines)
     create_params(request_string)
   end
@@ -117,31 +116,33 @@ class Request<ol class="nocode errors smells">  <li>    <div class="description"
     @method = @method.downcase.to_sym
   end
 
-  def create_headers(source_strings)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Too-Many-Statements.md" target="_blank"><b>TooManyStatements</b></a>        </span>      </div>      <span>Request#create_headers has approx 6 statements</span>          </div>  </li></ol>
+  def create_headers(source_strings)
     headers_info = []
     source_strings.each do |element|
-      headers_info &lt;&lt; (element) if element.include?(&#39;:&#39;)
+      headers_info &lt;&lt; (element) if element.include?(&#39;:&#39;)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Feature-Envy.md" target="_blank"><b>FeatureEnvy</b></a>        </span>      </div>      <span>Request#create_headers refers to 'element' more than self (maybe move it to another class?)</span>              <span>Locations:</span>                  <a href="request.html#L23" class="js-smell-location">0</a>                  <a href="request.html#L26" class="js-smell-location">1</a>                  </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Feature-Envy.md" target="_blank"><b>FeatureEnvy</b></a>        </span>      </div>      <span>Request#create_headers refers to 'headers_info' more than self (maybe move it to another class?)</span>              <span>Locations:</span>                  <a href="request.html#L23" class="js-smell-location">0</a>                  <a href="request.html#L26" class="js-smell-location">1</a>                  </div>  </li></ol>
     end
 
-    @headers = []
-
-    @headers = headers_info.map { |element| element.split(&#39;:&#39;, 2).map(&amp;:strip) }.to_h
+    @headers = headers_info.map { |element| element.split(&#39;:&#39;, 2).map(&amp;:strip) }.to_h<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Feature-Envy.md" target="_blank"><b>FeatureEnvy</b></a>        </span>      </div>      <span>Request#create_headers refers to 'element' more than self (maybe move it to another class?)</span>              <span>Locations:</span>                  <a href="request.html#L23" class="js-smell-location">0</a>                  <a href="request.html#L26" class="js-smell-location">1</a>                  </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Feature-Envy.md" target="_blank"><b>FeatureEnvy</b></a>        </span>      </div>      <span>Request#create_headers refers to 'headers_info' more than self (maybe move it to another class?)</span>              <span>Locations:</span>                  <a href="request.html#L23" class="js-smell-location">0</a>                  <a href="request.html#L26" class="js-smell-location">1</a>                  </div>  </li></ol>
   end
 
-  def create_params(source_string)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>Request#create_params has a flog score of 38</span>          </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Too-Many-Statements.md" target="_blank"><b>TooManyStatements</b></a>        </span>      </div>      <span>Request#create_params has approx 8 statements</span>          </div>  </li></ol>
+  def create_params(source_string)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>Request#create_params has a flog score of 26</span>          </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Too-Many-Statements.md" target="_blank"><b>TooManyStatements</b></a>        </span>      </div>      <span>Request#create_params has approx 6 statements</span>          </div>  </li></ol>
     @params = {}
 
     if source_string[-2..] != &quot;\n\n&quot;
       @params = source_string.split(&quot;\n&quot;)[-1].split(&#39;&amp;&#39;).map do |element|
-        element.include?(&#39;=&#39;) ? element.split(&#39;=&#39;, 2).map(&amp;:strip) : nil<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Request#create_params calls 'element.include?('=')' 2 times</span>              <span>Locations:</span>                  <a href="request.html#L37" class="js-smell-location">0</a>                  <a href="request.html#L44" class="js-smell-location">1</a>                  </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Request#create_params calls 'element.split('=', 2)' 2 times</span>              <span>Locations:</span>                  <a href="request.html#L37" class="js-smell-location">0</a>                  <a href="request.html#L44" class="js-smell-location">1</a>                  </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Request#create_params calls 'element.split('=', 2).map(&:strip)' 2 times</span>              <span>Locations:</span>                  <a href="request.html#L37" class="js-smell-location">0</a>                  <a href="request.html#L44" class="js-smell-location">1</a>                  </div>  </li></ol>
+        assert_params(element)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Request#create_params calls 'assert_params(element)' 2 times</span>              <span>Locations:</span>                  <a href="request.html#L34" class="js-smell-location">0</a>                  <a href="request.html#L41" class="js-smell-location">1</a>                  </div>  </li></ol>
       end.compact.to_h
     end
 
     return unless @resource.include?(&#39;?&#39;)
 
     @params = @resource.split(&#39;?&#39;, 2)[-1].split(&#39;&amp;&#39;).map do |element|
-      element.include?(&#39;=&#39;) ? element.split(&#39;=&#39;, 2).map(&amp;:strip) : nil<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Request#create_params calls 'element.include?('=')' 2 times</span>              <span>Locations:</span>                  <a href="request.html#L37" class="js-smell-location">0</a>                  <a href="request.html#L44" class="js-smell-location">1</a>                  </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Request#create_params calls 'element.split('=', 2)' 2 times</span>              <span>Locations:</span>                  <a href="request.html#L37" class="js-smell-location">0</a>                  <a href="request.html#L44" class="js-smell-location">1</a>                  </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Request#create_params calls 'element.split('=', 2).map(&:strip)' 2 times</span>              <span>Locations:</span>                  <a href="request.html#L37" class="js-smell-location">0</a>                  <a href="request.html#L44" class="js-smell-location">1</a>                  </div>  </li></ol>
+      assert_params(element)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Request#create_params calls 'assert_params(element)' 2 times</span>              <span>Locations:</span>                  <a href="request.html#L34" class="js-smell-location">0</a>                  <a href="request.html#L41" class="js-smell-location">1</a>                  </div>  </li></ol>
     end.compact.to_h
+  end
+
+  def assert_params(element)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Utility-Function.md" target="_blank"><b>UtilityFunction</b></a>        </span>      </div>      <span>Request#assert_params doesn't depend on instance state (maybe move it to another class?)</span>          </div>  </li></ol>
+    element.include?(&#39;=&#39;) ? element.split(&#39;=&#39;, 2).map(&amp;:strip) : nil
   end
 end
 </code>
