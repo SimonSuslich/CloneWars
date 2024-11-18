@@ -5,7 +5,7 @@ class Response
         @body = body
     end
 
-    def idontknow
+    def printData
         "HTTP/1.1 #{@status}\r\n" \
             "Content-Type: text/html\r\n" \
             "\r\n" +

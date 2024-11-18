@@ -39,7 +39,7 @@ class HTTPServer
 
 
 
-            session.print response.idontknow
+            session.print response.printData
         end
     end
 end

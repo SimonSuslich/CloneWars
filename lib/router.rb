@@ -1,19 +1,20 @@
 class Router
 
     def initialize
-        @routes = {}
+        @routes = []
     
     end
 
     def add_route(method, path, &block)
-        @routes[[method, path]] = block
+        @routes << {method: method, path: path, block: block}
 
     end
 
     def match_route(request)
 
-        @routes.each_key do |element|
-            element[0] == [request.method, request.resource] ? "hey" : "ney"
+        @routes.each do |element|
+            element[:method] != request.method ? "404" : nil
+            element[:path] != request.resource ? "404" : nil
         end 
 
     end
