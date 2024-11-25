@@ -1,5 +1,8 @@
 class Router
 
+    attr_reader :routes, :method, :path, :block
+
+
     def initialize
         @routes = []
     
@@ -12,10 +15,17 @@ class Router
 
     def match_route(request)
 
-        @routes.each do |element|
-            element[:method] != request.method ? "404" : nil
-            element[:path] != request.resource ? "404" : nil
-        end 
+        @routes.find do |element|
+            element[:method] == request.method && element[:path] == request.resource
+        end
+
+
+
+
+        # @routes.each do |element|
+        #     element[:method] != request.method ? "404" : nil
+        #     element[:path] != request.resource ? "404" : nil
+        # end 
 
     end
 

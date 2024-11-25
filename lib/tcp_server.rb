@@ -11,9 +11,9 @@ class HTTPServer
     end
 
     def define_routes
-        router = Router.new
-        router.add_route(:get, '/') do |request|
-            Response.new(200, "<h1>DOoode!!</h1>")
+        @router = Router.new
+        @router.add_route(:get, '/') do |request|
+            "<h1>DOoode!!</h1>"
         end
     end
 
@@ -34,12 +34,20 @@ class HTTPServer
             puts "-" * 40 
 
             request = Request.new(data)
-            router.match_route(request)
-            # Sen kolla om resursen (filen finns)
+            route = @router.match_route(request)
+            
+            if route
+                status = 200
+                body = route[:block].call
+            else
+                status = 404
+                body = "<h1>NOT FOUND</h1>"
+            end
+            
+            response = Response.new(status, body)
 
-
-
-            session.print response.printData
+            
+            session.print response.print_data
         end
     end
 end
