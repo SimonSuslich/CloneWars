@@ -13,9 +13,39 @@ class HTTPServer
     def define_routes
         @router = Router.new
         @router.add_route(:get, '/') do |request|
-            "<h1>DOoode!!</h1>"
+            "<h1>CloneWars Prog2 Projetk</h1>"
         end
     end
+
+    mime_types = {
+        ".html" => "text/html",
+        ".css"  => "text/css",
+        ".js"   => "application/javascript",
+        ".png"  => "image/png",
+        ".jpg"  => "image/jpeg",
+        ".jpeg" => "image/jpeg",
+        ".gif"  => "image/gif",
+        ".zip"  => "application/zip",
+        ".txt"  => "text/plain",
+        ".json" => "application/json"
+      }
+    
+    mime_default = "application/octet-stream"
+    
+
+    def serve_static_file(path)
+        if File.exist?(path) && !File.directory?(path)
+          ext = File.extname(path)
+          mime_type = mime_types[ext] || mime_default
+          content = File.read(path) 
+
+          return 200, mime_type, content
+        else
+          return 404, "text/plain", "404 Not Found"
+        end
+    end
+
+
 
     def start
         server = TCPServer.new(@port)
@@ -39,9 +69,10 @@ class HTTPServer
             if route
                 status = 200
                 body = route[:block].call
+                mime_type = "text/html"
             else
-                status = 404
-                body = "<h1>NOT FOUND</h1>"
+              static_file_path = "public#{request.path}" 
+              status, mime_type, body = serve_static_file(static_file_path)
             end
             
             response = Response.new(status, body)
