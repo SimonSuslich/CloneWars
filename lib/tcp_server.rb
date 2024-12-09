@@ -15,33 +15,36 @@ class HTTPServer
         @router.add_route(:get, '/') do |request|
             "<h1>CloneWars Prog2 Projetk</h1>"
         end
+
+        @mime_types = {
+            ".html" => "text/html",
+            ".css"  => "text/css",
+            ".js"   => "application/javascript",
+            ".png"  => "image/png",
+            ".jpg"  => "image/jpeg",
+            ".jpeg" => "image/jpeg",
+            ".gif"  => "image/gif",
+            ".zip"  => "application/zip",
+            ".txt"  => "text/plain",
+            ".json" => "application/json"
+        }
+        
+        @mime_default = "application/octet-stream"
     end
 
-    mime_types = {
-        ".html" => "text/html",
-        ".css"  => "text/css",
-        ".js"   => "application/javascript",
-        ".png"  => "image/png",
-        ".jpg"  => "image/jpeg",
-        ".jpeg" => "image/jpeg",
-        ".gif"  => "image/gif",
-        ".zip"  => "application/zip",
-        ".txt"  => "text/plain",
-        ".json" => "application/json"
-      }
-    
-    mime_default = "application/octet-stream"
+
     
 
     def serve_static_file(path)
         if File.exist?(path) && !File.directory?(path)
-          ext = File.extname(path)
-          mime_type = mime_types[ext] || mime_default
-          content = File.read(path) 
+            ext = File.extname(path)
 
-          return 200, mime_type, content
+            mime_type = @mime_types[ext] || @mime_default
+            content = File.read(path) 
+
+            return 200, mime_type, content
         else
-          return 404, "text/plain", "404 Not Found"
+            return 404, "text/plain", "404 Not Found"
         end
     end
 
@@ -65,19 +68,23 @@ class HTTPServer
 
             request = Request.new(data)
             route = @router.match_route(request)
-            
+        
             if route
                 status = 200
                 body = route[:block].call
                 mime_type = "text/html"
             else
-              static_file_path = "public#{request.path}" 
-              status, mime_type, body = serve_static_file(static_file_path)
+                static_file_path = "#{File.join("public", request.resource)}"
+                status, mime_type, body = serve_static_file(static_file_path)
             end
             
-            response = Response.new(status, body)
+            response = Response.new(status, body, mime_type)
 
-            
+
+
+            print response.print_data
+            p "Break dude"
+            # Måste stanna i raden innan, eftrersom den kör inte metoden .print_data
             session.print response.print_data
         end
     end
