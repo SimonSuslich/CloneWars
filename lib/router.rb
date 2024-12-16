@@ -20,13 +20,6 @@ class Router
         end
 
 
-
-
-        # @routes.each do |element|
-        #     element[:method] != request.method ? "404" : nil
-        #     element[:path] != request.resource ? "404" : nil
-        # end 
-
     end
 
 end

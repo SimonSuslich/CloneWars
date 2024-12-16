@@ -7,12 +7,18 @@ class Request
   def initialize(request_string)
     request_lines = request_string.split("\n")
     first_line, *rest_lines = request_lines
+    # require 'debug'
+    # binding.break
+
     create_methods(first_line)
     create_headers(rest_lines)
     create_params(request_string)
   end
 
   def create_methods(source_string)
+    # p source_string
+
+
     @method, @resource, @version = source_string.split(' ')
     @method = @method.downcase.to_sym
   end

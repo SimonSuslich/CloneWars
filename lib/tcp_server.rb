@@ -13,7 +13,7 @@ class HTTPServer
     def define_routes
         @router = Router.new
         @router.add_route(:get, '/') do |request|
-            "<h1>CloneWars Prog2 Projetk</h1>"
+            "<h1>CloneWars Prog2 Projetk</h1>\n<a href='index.html'>go to index.html</a>\n<a href='/image.png'>go watch image</a>"
         end
 
         @mime_types = {
@@ -40,8 +40,8 @@ class HTTPServer
             ext = File.extname(path)
 
             mime_type = @mime_types[ext] || @mime_default
-            content = File.read(path) 
-
+            content = File.binread(path) 
+            
             return 200, mime_type, content
         else
             return 404, "text/plain", "404 Not Found"
@@ -66,9 +66,14 @@ class HTTPServer
             puts data
             puts "-" * 40 
 
+
+
             request = Request.new(data)
             route = @router.match_route(request)
         
+            # require 'debug'
+            # binding.break
+
             if route
                 status = 200
                 body = route[:block].call
@@ -78,14 +83,13 @@ class HTTPServer
                 status, mime_type, body = serve_static_file(static_file_path)
             end
             
+
             response = Response.new(status, body, mime_type)
 
 
-
-            print response.print_data
-            p "Break dude"
-            # Måste stanna i raden innan, eftrersom den kör inte metoden .print_data
             session.print response.print_data
+
+            session.close
         end
     end
 end
