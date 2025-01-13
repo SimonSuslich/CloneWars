@@ -16,9 +16,6 @@ class Request
   end
 
   def create_methods(source_string)
-    # p source_string
-
-
     @method, @resource, @version = source_string.split(' ')
     @method = @method.downcase.to_sym
   end

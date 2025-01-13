@@ -9,8 +9,20 @@ class Router
     end
 
     def add_route(method, path, &block)
-        @routes << {method: method, path: path, block: block}
+        path_variables_arr = []
 
+        path.split('/').each do |part|
+            path_variables_arr << (part) if part[0] == ':'
+        end
+
+        if path_variables_arr !=  []
+            @path_variables = path_variables_arr.map { |key| [key, key.to_s] }.to_h
+            p @path_variables
+        end
+
+        p block
+
+        @routes << {method: method, path: path, block: block}
     end
 
     def match_route(request)

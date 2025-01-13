@@ -1,7 +1,7 @@
 class Response
   attr_reader :status, :body, :headers
 
-  def initialize(status, body, content_type = "text/html")
+  def initialize(status, body, content_type = "text/html", session)
     @status = status
     @body = body.is_a?(String) ? body : body.force_encoding("BINARY")
     @headers = {
@@ -9,6 +9,7 @@ class Response
       "Content-Length" => @body.bytesize,
       "Connection" => "close"
     }
+    @session = session
   end
 
   def print_data
@@ -22,7 +23,13 @@ class Response
     response.join("\r\n")
   end
 
-  private
+  def send 
+    @session.print print_data()
+    @session.close
+
+  end
+
+  private 
 
   def status_message
     case @status

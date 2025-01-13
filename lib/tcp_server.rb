@@ -2,6 +2,7 @@
 require_relative 'router'
 require_relative 'response'
 require_relative 'request'
+require_relative 'mime_type'
 require 'socket'
 
 class HTTPServer
@@ -13,34 +14,25 @@ class HTTPServer
     def define_routes
         @router = Router.new
         
-        @router.add_route(:get, '/') do |request|
-            "<h1>CloneWars Prog2 Projetk</h1>\n<a href='index.html'>go to index.html</a>\n<a href='/image.png'>go watch image</a>"
+
+        @router.add_route(:get, '/') do
+            "<h1>CloneWars Prog2 Projekt</h1>\n<a href='index.html'>go to index.html</a>\n<a href='/image.png'>go watch image</a>"
+        end
+        
+        
+        @router.add_route(:get, '/hey/:id') do |id|
+            "hey + #{id}"
         end
 
-        @mime_types = {
-            ".html" => "text/html",
-            ".css"  => "text/css",
-            ".js"   => "application/javascript",
-            ".png"  => "image/png",
-            ".jpg"  => "image/jpeg",
-            ".jpeg" => "image/jpeg",
-            ".gif"  => "image/gif",
-            ".zip"  => "application/zip",
-            ".txt"  => "text/plain",
-            ".json" => "application/json"
-        }
-        
-        @mime_default = "application/octet-stream"
     end
-
-
-    
 
     def serve_static_file(path)
         if File.exist?(path) && !File.directory?(path)
             ext = File.extname(path)
 
-            mime_type = @mime_types[ext] || @mime_default
+            mime_type = Mime_type.new(ext)
+
+            mime_type = mime_type.get_ext || mime_type[:mime_default].call
             content = File.binread(path) 
             
             return 200, mime_type, content
@@ -48,8 +40,6 @@ class HTTPServer
             return 404, "text/plain", "404 Not Found"
         end
     end
-
-
 
     def start
         server = TCPServer.new(@port)
@@ -83,12 +73,8 @@ class HTTPServer
             end
             
 
-            response = Response.new(status, body, mime_type)
-
-
-            session.print response.print_data
-
-            session.close
+            response = Response.new(status, body, mime_type, session)
+            response.send
         end
     end
 end
