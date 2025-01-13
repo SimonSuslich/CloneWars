@@ -12,6 +12,7 @@ class HTTPServer
 
     def define_routes
         @router = Router.new
+        
         @router.add_route(:get, '/') do |request|
             "<h1>CloneWars Prog2 Projetk</h1>\n<a href='index.html'>go to index.html</a>\n<a href='/image.png'>go watch image</a>"
         end
@@ -71,8 +72,6 @@ class HTTPServer
             request = Request.new(data)
             route = @router.match_route(request)
         
-            # require 'debug'
-            # binding.break
 
             if route
                 status = 200
