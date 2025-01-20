@@ -18,10 +18,13 @@ class HTTPServer
         @router.add_route(:get, '/') do
             "<h1>CloneWars Prog2 Projekt</h1>\n<a href='index.html'>go to index.html</a>\n<a href='/image.png'>go watch image</a>"
         end
-        
-        
+
         @router.add_route(:get, '/hey/:id') do |id|
-            "hey + #{id}"
+            "Hey, Player #{id}"
+        end
+
+        @router.add_route(:get, '/dude/:id/:name') do |id, name|
+            "Wassup #{name}! Your id is #{id}!"
         end
 
     end
@@ -60,12 +63,12 @@ class HTTPServer
 
 
             request = Request.new(data)
-            route = @router.match_route(request)
+            route = @router.match_route(request) #returnerar numera blocket direkt med eventuella variabler insatta
         
 
             if route
                 status = 200
-                body = route[:block].call
+                body = route
                 mime_type = "text/html"
             else
                 static_file_path = "#{File.join("public", request.resource)}"
