@@ -8,21 +8,10 @@ class Router
     # Add route method
     def add_route(method, path, &block)
 
-        path_parts = path[1..-1].split('/')
-
-        match_data_path = "^/"
-        path_parts.each_with_index do |part, i|
-            str = part
-            if part.start_with?(':')
-                str = "/(?<#{part[1..-1]}>\\w+)"
-            end
-            match_data_path << str
-        end
-        match_data_path << "$"
-        path_regexp = Regexp.new(match_data_path)
+        regexp_path = Regexp.new(path.gsub(/:([\w]+)/, '(?<\1>\w+)').prepend('^').concat('$'))
 
 
-        @routes << { method: method, path: path_regexp, block: block }
+        @routes << { method: method, path: regexp_path, block: block }
     end
 
     #Match route using request.resource and request.method
