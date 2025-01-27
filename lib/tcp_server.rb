@@ -24,8 +24,12 @@ class HTTPServer
         end
 
         @router.add_route(:get, '/dude/:id/:name') do |id, name|
-            "Wassup #{name}! Your id is #{id}!"
+            "Wassup #{name}! Your id is #{id}, #{name} ;)!"
         end
+
+        # get '/dude/:id/:name' do |id, name|
+        #     "Wassup #{name}! Your id is #{id}, #{name} ;)!"
+        # end
 
     end
 
