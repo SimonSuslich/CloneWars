@@ -1,6 +1,6 @@
-lib/router.rb ce8190d3912ec6769affb51976b70fd6e8a509c7
-lib/request.rb 898dd9817ad56c7c022883c8dca4e31ada88b5c9
-lib/testing.rb 1123b51264e85b6dbd68c732ae52081546ca2e0e
-lib/response.rb 46dc3004dff16ecfbd3357b5e8a4676664301592
-lib/mime_type.rb eddd25f49dc2e2fd806058c94e9a0bdffeb1c537
-lib/tcp_server.rb ae384f973d89c15ae9321adec111c59da1e5e9d0
+lib/router.rb 84930c11897cf974cfae9cda7f4120f21ce4c88b
+lib/request.rb 4e2005e9245e7578a54b2567330d0d77cf307a0a
+lib/response.rb e087c49d511c4b0138733fe0e9da7d849eabbe3f
+lib/clonewars.rb 743936bb392f8e2ca0105582676aaa3234184b13
+lib/mime_type.rb 35cf5f62d3a3d51933f0701cfed0bd77fdbca04a
+lib/tcp_server.rb 6a452cf07ec0c3d162185786d518eff2dca94d5f

@@ -17,7 +17,6 @@ class Router
     # @return [void]
     def add_route(method, path, block)
       regexp_path = Regexp.new(path.gsub(/:([\w]+)/, '(?<\1>\w+)').prepend('^').concat('$'))
-      p regexp_path
       @routes << { method: method, path: regexp_path, block: block }
     end
   

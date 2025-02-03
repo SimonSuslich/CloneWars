@@ -2,11 +2,26 @@
 
 require 'minitest/test_task'
 
+# The Rake task setup for running Minitest tests.
+#
+# This task defines how to run tests using Minitest framework.
+# It includes setting the required directories and test files pattern.
 Minitest::TestTask.create(:test) do |t|
+  # Directories containing test files.
+  # @return [Array<String>] List of directories to search for test files.
   t.libs << 'test'
   t.libs << 'lib'
+
+  # Disables warnings when running tests.
+  # @return [Boolean] Whether to show warnings or not.
   t.warning = false
+
+  # The glob pattern to find test files.
+  # @return [Array<String>] List of file patterns to include in tests.
   t.test_globs = ['test/**/*_spec.rb']
 end
 
+# The default task to run when `rake` is executed.
+# @return [void]
 task default: :test
+
