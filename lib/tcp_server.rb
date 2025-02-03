@@ -7,31 +7,11 @@ require 'socket'
 
 class HTTPServer
 
-    def initialize(port)
+    def initialize(port, router)
         @port = port
+        @router = router
     end
 
-    def define_routes
-        @router = Router.new
-        
-
-        @router.add_route(:get, '/') do
-            "<h1>CloneWars Prog2 Projekt</h1>\n<a href='index.html'>go to index.html</a>\n<a href='/image.png'>go watch image</a>"
-        end
-
-        @router.add_route(:get, '/hey/:id') do |id|
-            "Hey, Player #{id}"
-        end
-
-        @router.add_route(:get, '/dude/:id/:name') do |id, name|
-            "Wassup #{name}! Your id is #{id}, #{name} ;)!"
-        end
-
-        # get '/dude/:id/:name' do |id, name|
-        #     "Wassup #{name}! Your id is #{id}, #{name} ;)!"
-        # end
-
-    end
 
     def serve_static_file(path)
         if File.exist?(path) && !File.directory?(path)
@@ -52,8 +32,6 @@ class HTTPServer
         server = TCPServer.new(@port)
         puts "Listening on #{@port}"
 
-        define_routes()
-
         while session = server.accept
             data = ""
             while line = session.gets and line !~ /^\s*$/
@@ -67,7 +45,7 @@ class HTTPServer
 
 
             request = Request.new(data)
-            route = @router.match_route(request) #returnerar numera blocket direkt med eventuella variabler insatta
+            route = @router.match_route(request)
         
 
             if route
@@ -85,6 +63,3 @@ class HTTPServer
         end
     end
 end
-
-server = HTTPServer.new(4567)
-server.start
